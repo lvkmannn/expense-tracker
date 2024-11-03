@@ -1,0 +1,32 @@
+{
+  "expenses": [
+    {
+      "date": "2024-10-27",
+      "amount": "10.00",
+      "category": "Needs",
+      "notes": "I buy a paracetamol from a pharmacy",
+      "id": "2"
+    },
+    {
+      "id": "d57f",
+      "date": "2024-10-27",
+      "amount": "8.50",
+      "category": "Wants",
+      "notes": "Just bought a pack of dblend"
+    },
+    {
+      "date": "2024-11-02",
+      "amount": "20.00",
+      "category": "Needs",
+      "notes": "Wifi bill (unifi)",
+      "id": "7f9f"
+    },
+    {
+      "date": "2024-11-03",
+      "amount": "8.00",
+      "category": "Wants",
+      "notes": "Rokok",
+      "id": "4fe1"
+    }
+  ]
+}
