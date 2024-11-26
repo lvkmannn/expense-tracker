@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import EditExpenseForm from "./EditExpenseForm";
+import Button from "../components/button/Button.tsx";
 
 const ExpenseDetails = () => {
     const { id } = useParams();
@@ -43,12 +44,23 @@ const ExpenseDetails = () => {
             { expense && (
                 <article>
                     
-                    <h2>{ expense.category }</h2>
+                    <h2>{ expense.title }</h2>
+                    <p>Category: { expense.category }</p>
                     <p>Date: { expense.date }</p>
-                    <p>Amount: { expense.amount }</p>
+                    <p>Amount: RM{ expense.amount }</p>
                     <p>Notes: { expense.notes }</p>
-                    <button onClick={handleUpdate}>Edit</button>
-                    <button onClick={handleDelete}>Delete</button>
+                    <div className="btn">
+                        <Button
+                            text="Edit"
+                            onClick={handleUpdate}
+                            color="#007BFF"
+                        ></Button>
+                        <Button
+                            text="Delete"
+                            onClick={handleDelete}
+                            color="#FF4D4D"
+                        ></Button>
+                    </div>
                 </article>
             )}
 

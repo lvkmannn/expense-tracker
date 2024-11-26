@@ -2,6 +2,7 @@
   "expenses": [
     {
       "date": "2024-10-27",
+      "title": "Test",
       "amount": "10.00",
       "category": "Needs",
       "notes": "I buy a paracetamol from a pharmacy",
@@ -9,12 +10,14 @@
     },
     {
       "id": "d57f",
+      "title": "Test 2",
       "date": "2024-10-27",
       "amount": "8.50",
       "category": "Wants",
-      "notes": "Just bought a pack of dblend"
+      "notes": "Just bought a doll"
     },
     {
+      "title": "Test",
       "date": "2024-11-02",
       "amount": "20.00",
       "category": "Needs",
@@ -22,11 +25,20 @@
       "id": "7f9f"
     },
     {
-      "date": "2024-11-03",
-      "amount": "8.00",
-      "category": "Wants",
-      "notes": "Rokok",
-      "id": "4fe1"
+      "title": "Test Update",
+      "date": "2024-11-23",
+      "amount": "1",
+      "category": "Needs",
+      "notes": "This is just a test",
+      "id": "79b2"
+    },
+    {
+      "id": "1ddb",
+      "title": "hello world",
+      "date": "2024-11-23",
+      "amount": "1",
+      "category": "Others",
+      "notes": "hello world"
     }
   ]
 }

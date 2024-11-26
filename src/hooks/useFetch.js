@@ -7,15 +7,8 @@ const useFetch = (url) => {
     const [error, setError] = useState(null);
 
 
-    // - useEffect will run in every render
-    // - Be Careful! You could end up in continous loop of renders
-    // - empty dependency array (at the end of the useEffect function ('[]'),
-    // will only run the useEffect once on the 1st render
-    // useEffect is also a good method to fetch the data
-
-
     useEffect(() => {
-        // abort controller
+        // Abort controller
         const abortCont = new AbortController();
 
         setTimeout(() => {

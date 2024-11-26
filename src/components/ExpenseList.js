@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; 
+import InfoButton from './button/InfoButton.tsx';
+
 
 const ExpenseList = ({ expenses }) => {
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+    const [selectedCategory, setSelectedCategory] = useState("All"); // Add state for selected category
 
     const months = [
         "January", "February", "March", "April", "May", "June", 
@@ -19,9 +22,13 @@ const ExpenseList = ({ expenses }) => {
 
     const handleYearChange = (event) => {
         setSelectedYear(event.target.value);
-        if (event.target.value == currentYear) {
+        if (event.target.value === currentYear) {
             setSelectedMonth(new Date().getMonth());
         }
+    };
+
+    const handleCategoryChange = (event) => {
+        setSelectedCategory(event.target.value);
     };
 
     const formatDate = (dateString) => {
@@ -32,13 +39,19 @@ const ExpenseList = ({ expenses }) => {
         return `${day}/${month}/${year}`;
     };
 
+    // Group expenses by date, filter by month, year, and category
     const groupedExpenses = expenses.reduce((acc, expense) => {
         const date = expense.date; 
         const expenseDate = new Date(date);
         const expenseMonth = expenseDate.getMonth();
         const expenseYear = expenseDate.getFullYear();
 
-        if (expenseMonth === parseInt(selectedMonth) && expenseYear === parseInt(selectedYear)) {
+        // Filter by month, year, and category
+        if (
+            expenseMonth === parseInt(selectedMonth) &&
+            expenseYear === parseInt(selectedYear) &&
+            (selectedCategory === "All" || expense.category === selectedCategory)
+        ) {
             if (!acc[date]) {
                 acc[date] = [];
             }
@@ -55,7 +68,7 @@ const ExpenseList = ({ expenses }) => {
 
     groupedArray.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-    // Calculate total expenses for the selected month and year
+    // Calculate total expenses for the selected month, year, and category
     const totalExpenses = groupedArray.reduce((total, group) => {
         return total + group.expenses.reduce((sum, expense) => {
             const amount = Number(expense.amount); // Convert to number
@@ -67,49 +80,76 @@ const ExpenseList = ({ expenses }) => {
         <div className="expense-list">
             <h2>All Expenses!</h2>
 
-            <label htmlFor="month-select">Select Month:</label>
-            <select id="month-select" value={selectedMonth} onChange={handleMonthChange}>
-                {months.map((month, index) => (
-                    <option 
-                        key={index} 
-                        value={index} 
-                        disabled={selectedYear == currentYear && index > new Date().getMonth()}
-                    >
-                        {month}
-                    </option>
-                ))}
-            </select>
+            <div className='list-select'>
+                <label htmlFor="month-select">Select Month: </label>
+                <select id="month-select" value={selectedMonth} onChange={handleMonthChange}>
+                    {months.map((month, index) => (
+                        <option 
+                            key={index} 
+                            value={index} 
+                            disabled={selectedYear === currentYear && index > new Date().getMonth()}
+                        >
+                            {month}
+                        </option>
+                    ))}
+                </select>
 
-            <label htmlFor="year-select">Select Year:</label>
-            <select id="year-select" value={selectedYear} onChange={handleYearChange}>
-                {years.map(year => (
-                    <option key={year} value={year}>{year}</option>
-                ))}
-            </select>
+                <label htmlFor="year-select">Select Year: </label>
+                <select id="year-select" value={selectedYear} onChange={handleYearChange}>
+                    {years.map(year => (
+                        <option key={year} value={year}>{year}</option>
+                    ))}
+                </select>
 
-            {/* Only display total expenses if there are grouped expenses */}
+                <label htmlFor="category-select">Select Category: </label>
+                <select id="category-select" value={selectedCategory} onChange={handleCategoryChange}>
+                    <option value="All">All</option>
+                    <option value="Needs">Needs</option>
+                    <option value="Wants">Wants</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
+
             {groupedArray.length > 0 && (
-                <h3>Total Expenses for {months[selectedMonth]} {selectedYear}: RM{totalExpenses.toFixed(2)}</h3>
+                <h3 className='title'>
+                    Total Expenses for {months[selectedMonth]} {selectedYear} ({selectedCategory}): RM{totalExpenses.toFixed(2)}
+                </h3>
             )}
 
             {groupedArray.length === 0 ? (
-                <p>No data available for the selected month and year.</p>
+                <p>No data available for the selected month, year, and category.</p>
             ) : (
-                groupedArray.map(group => (
-                    <div key={group.date}>
-                        <h3>{formatDate(group.date)}</h3> 
-                        {group.expenses.map(expense => (
-                            <div className="expense-preview" key={expense.id}>
-                                <Link to={`/expenses/${expense.id}`}>
-                                    <h4>{expense.category}</h4>
-                                    <p>Amount: RM{expense.amount}</p>
-                                    <p>Notes: {expense.notes}</p>
-                                </Link>
-                            </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Title</th>
+                            <th>Category<InfoButton/></th>
+                            <th>Amount (RM)</th>
+                            <th>Notes</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {groupedArray.map(group => (
+                            group.expenses.map(expense => (
+                                <tr key={expense.id}>
+                                    <td>{formatDate(group.date)}</td>
+                                    <td>{expense.title}</td>
+                                    <td>{expense.category}</td>
+                                    <td>{Number(expense.amount).toFixed(2)}</td>
+                                    <td>{expense.notes}</td>
+                                    <td>
+                                        <Link to={`/expenses/${expense.id}`}>View Details</Link>
+                                    </td>
+                                </tr>
+                            ))
                         ))}
-                    </div>
-                ))
+                    </tbody>
+                </table>
             )}
+
+
         </div>
     );
 }
