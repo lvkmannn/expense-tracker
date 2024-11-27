@@ -25,6 +25,10 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin: 20px;
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 p {
@@ -65,12 +69,10 @@ a, a:visited {
 }
 
 /* Content */
-
 h2:not(.HomePage h2) {
   padding-bottom: 10px;
   text-align: center;
 }
-
 
 /* HomePage */
 .HomePage h2 {
@@ -80,31 +82,29 @@ h2:not(.HomePage h2) {
   text-align: center;
 }
 
-
-
 /* Style for the overlay background */
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000; /* Ensure it overlays other content */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
 
 /* Style for the modal content */
 .modal-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    width: 80%;
-    max-width: 500px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    z-index: 1001; /* Above the overlay */
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 500px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
 }
 
 .modal-content h2 {
@@ -113,15 +113,13 @@ h2:not(.HomePage h2) {
 
 /* Disable scrolling when modal is open */
 body.modal-open {
-    overflow: hidden;
+  overflow: hidden;
 }
-
 
 form label {
-    display: block;
-    margin: 0.5rem 0;
+  display: block;
+  margin: 0.5rem 0;
 }
-
 
 label {
   margin-left: 20px;
@@ -142,11 +140,12 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  font-size: 0.9em; 
 }
 
 th, td {
   border: 1px solid #ccc;
-  padding: 10px;
+  padding: 8px;
   text-align: left;
 }
 
@@ -154,14 +153,13 @@ th {
   background-color: #555555;
   color: #ffffff; 
   border: 1px solid #ccc; 
-  padding: 10px;
+  padding: 8px;
   text-align: left;
 }
 
 tr:nth-child(even) {
   background-color: #f9f9f9;
 }
-
 
 .list-select {
   padding: 10px;
@@ -200,3 +198,51 @@ tr:nth-child(even) {
   border-radius: 4px; 
 }
 
+/* Media Queries for Mobile Responsiveness */
+@media (max-width: 768px) {
+  body {
+    padding-top: 50px;
+  }
+
+  .navbar {
+    flex-direction: column;
+    padding: 10px 20px;
+  }
+
+  .navbar h1 {
+    font-size: 1.4em;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .App {
+    margin-top: 120px;
+    max-width: 90%; 
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  table {
+    font-size: 0.8em;
+    margin-top: 15px;
+  }
+
+  th, td {
+    padding: 6px; 
+  }
+
+  .formfield {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .formfield label {
+    margin-bottom: 5px; 
+  }
+
+  .formfield input,
+  .formfield textarea,
+  .formfield select {
+    width: 100%;
+  }
+}
